@@ -21,8 +21,14 @@ body{
 	/* background-color: #476622; */
 	color: black;
 	margin: 10px;
+	margin-left: 20px;
 	position: relative;
+	transition: all 1.5s;
 
+}
+
+.card:hover{
+	transform: rotateY(360deg);
 }
 
 button{

@@ -127,6 +127,19 @@ function checkWin(){
 
 		}
 	}
+
+	// disable all buttons; 
+	$(".hit-button").attr("disabled", true);
+	$(".hit-button").addClass(" disabled");
+	$(".hit-button").removeClass("btn-success");
+
+	$(".deal-button").attr("disabled", true);
+	$(".deal-button").addClass(" disabled");
+	$(".deal-button").removeClass("btn-primary");												
+
+	$(".stand-button").attr("disabled", true);
+	$(".stand-button").addClass(" disabled");
+	$(".stand-button").removeClass("btn-danger");												
 }
 
 function reset(){
@@ -150,7 +163,12 @@ function reset(){
 	//enable Hit button again
 	$(".hit-button").attr("disabled", false);
 	$(".hit-button").addClass("btn-success");
-	$(".hit-button").removeClass(" disabled");						
+	$(".hit-button").removeClass(" disabled");
+
+	//re-enable the stand button
+	$(".stand-button").attr("disabled", false);
+	$(".stand-button").addClass("btn-danger");
+	$(".stand-button").removeClass(" disabled");							
 
 	//clear text that talks to user 	
 	$("#spaceForText").html("&nbsp");
@@ -206,11 +224,26 @@ function placeCard(who, where, whatCard){
 function calculateTotal(hand, who){
 	var total = 0; 
 	var cardValue = 0; //temp var for value of current card 
+	var ace = false;
 	for (let i = 0; i < hand.length; i++){
-		cardValue = Number(hand[i].slice(0,-1));//copy the first character all the way to the end with the exdception of the last character 
-		console.log(hand[i]);
-		if(cardValue > 10){
-			cardValue = 10;
+		//program Ace Logic
+		//if the card is an ace
+		if(hand[i].slice(0,-1) === "1"){
+			//we have an ace
+			console.log("I'm an ace");
+			if((total + 11) >21){
+				//if the player/dealer busts, the card is 1 otherwise it's 11
+				cardValue = 1;
+			}else{
+				cardValue = 11;
+			}
+			console.log(cardValue);
+		}else{
+			cardValue = Number(hand[i].slice(0,-1));//copy the first character all the way to the end with the exdception of the last character 
+			console.log(hand[i]);
+			if(cardValue > 10){
+				cardValue = 10;
+			}	
 		}
 		total+=cardValue;
 	}
