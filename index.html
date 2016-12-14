@@ -5,10 +5,12 @@
 
 		<!-- link to local bootstrap -->
 		<link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css">
+		<!-- link to custom css -->
 		<link rel="stylesheet" type="text/css" href="CSS/blackjack.css">
 			
 		<!-- link to local jquery -->	
 		<script src="JS/jquery.min.js"></script>
+		<!-- link to custom javascript -->
 		<script src="JS/blackjack.js"></script>
 
 
@@ -16,6 +18,9 @@
 	<body>
 	<div class="container">
 		<div class="row">
+
+
+			<!-- <div id="greeting"> -->
 			<!-- The table element -->
 			<div class="the-table col-sm-8 col-sm-offset-2">
 
@@ -43,10 +48,13 @@
 				<div class="row">
 					<div class="col-sm-12 player-hand-wrapper">
 						<!-- Dealer Total -->
-						<div class="col-sm-3 player-total">
+						<div class="col-sm-4 player-total">
 							Player Total: <span class="player-total-number">0</span>
 						</div>
-						<div class="col-sm-9 player-cards">
+
+						<!-- Indent player hand to the right underneath the dealer hand -->
+					
+						<div class="col-sm-8 player-cards">
 							<div class="col-sm-1 card card-one"></div>
 							<div class="col-sm-1 card card-two"></div>
 							<div class="col-sm-1 card card-three"></div>
@@ -57,17 +65,19 @@
 					</div>
 				</div>
 
-				<div class="row">
+
+
+				<div class="row someButtons">
 					<div class="col-sm-2 col-sm-offset-2">
-						<button class="deal-button">Deal</button>
+						<button class="deal-button btn-primary">Deal</button>
 					</div>
 
 					<div class="col-sm-2 col-sm-offset-1">
-						<button class="hit-button">Hit</button>
+						<button class="hit-button btn-success">Hit</button>
 					</div>
 
 					<div class="col-sm-2 col-sm-offset-1">
-						<button class="stand-button">Stand</button>
+						<button class="stand-button btn-danger">Stand</button>
 					</div>
 				</div>
 

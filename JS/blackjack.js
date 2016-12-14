@@ -1,126 +1,93 @@
-// ------------------------------------------
-// --------------GLOBALS---------------------
-// ------------------------------------------
-// Create the deck and shuffle it
-var theDeck = [];
-var playersHand = [];
+// -------------------------------------------------
+// ------------------GLOBALS------------------------
+// -------------------------------------------------
+
+
+
+var theDeck = createDeck();
+var playersHand = []; 
 var dealersHand = [];
-createDeck();
 
+
+// no named function =>
+// load this after the dom is ready
 $(document).ready(function(){
-
-
-
-	//Get a deal working
 	$(".deal-button").click(function(){
-		console.log(this);
-		// Need a way to make the deck
+		// deck is already created when javascript loads
+		//next we have to shuffle the deck
 		shuffleDeck();
 
-		// Add card 0 to players hand, add card 1 to the dealer's hand, add card 2 to the player's hand and add card 3 to the dealer face down
+		// give the player the first and third card
 		playersHand.push(theDeck[0]);
-		dealersHand.push(theDeck[1]);
 		playersHand.push(theDeck[2]);
+
+		dealersHand.push(theDeck[1]);
 		dealersHand.push(theDeck[3]);
 
-		placeCard(playersHand[0], "player", "one");
+		// place the PLAYER's first two cards in the DOM
+		placeCard("player", "one", playersHand[0]);
+		placeCard("player", "two", playersHand[1]);
 
-		placeCard(playersHand[1], "player", "two");
+		// place the first two DEALER's cards in teh DOM 
 
-		placeCard(dealersHand[0], "dealer", "one");
+		placeCard("dealer", "one", dealersHand[0]);
+		placeCard("dealer", "two", dealersHand[1]);
 
-		placeCard(dealersHand[1], "dealer", "two");
-
-		calculateTotal("player", playersHand);
-		calculateTotal("dealer", dealersHand);
-
-	});
+	})
 
 	$(".hit-button").click(function(){
-		console.log(this);	
-	});
+		
+	})
 
 	$(".stand-button").click(function(){
-		console.log(this);
+		
 	})
+
+
 });
 
 function createDeck(){
-	// clear the deck before creating a new one
-	// Fill the deck with 52 cards 
-	// -4 suits (h,s,d,c)
-	// -- 1-13 (11 = j, 12 = q, 13 = K)
-	// Loop through all four suits (suits array)
-	suits = ["h", "s", "d", "c"];
-	for (let s = 0; s < suits.length; s++){
-		// loop through all 13 cards for each suits
-		for(let c = 1; c <= 13; c++){
-			theDeck.push(c+suits[s]);
-			
+	var suits = ["h", "s", "d", "c"];
+	var newDeck = []
+
+	// suits / outer loop
+	for(let s = 0; s < suits.length; s++){
+		// card values / inner loop
+		for(c = 1; c <= 13; c++){
+			newDeck.push(c+suits[s]);
 		}
 	}
+	// console.log(newDeck);
+	return newDeck;
 }
 
-function placeCard(whatCard, who, whichSlot){
-
-	var classToTarget = "."+who+"-cards .card-" + whichSlot; //could be .dealer-cards or .player-cards
-	console.log(classToTarget);
-	// classToTarget = String(classToTarget);
-
-	$(classToTarget).html(whatCard);
-
-	$(classToTarget).html('<img src="images/cards/'+whatCard+'.png">');
-
-	// var dealerCardOne = $(".dcard-one");
-	// var dealerCardTwo = $(".dcard-two");
-
-	// var playerCardOne = $(".pcard-one");
-	// var playerCardTwo = $(".pcard-two");	
-
-	// console.log(dealerCardOne, dealerCardTwo, playerCardOne, playerCardTwo);
-	// var topCard = theDeck[0];
-	// var secondCard = theDeck[1];
-
-	// // generate string version of card
-
-	// topCardImage = "<img src='Images/cards/"+topCard+".png"+"'"+">";
-	// console.log(topCardImage);
-	// dealerCardOne.html(topCardImage);
-
-	// delete top card after you hand it out
-
-
-}
-
-
-function calculateTotal(who, theirHand){
-	var cardValue = 0; 
-	var total = 0; 
-	for(let i = 0; i < theirHand.length; i++){
-		cardValue = Number(theirHand[i].slice(0, -1)); //start at the beginning and go until the end but not the last one
-		console.log(cardValue);
-		total+=cardValue;
-	}
-	var classToTarget = "."+who+"-total-number"; 
-	console.log(classToTarget);
-	$(classToTarget).html(total);
-}
-
+//shuffle the deck so it is not in order
 function shuffleDeck(){
-	//grab two cards and swap them 1000 times 
-	for (let i = 0; i < 900; i++){
-		let randomNumber1 = Math.floor(Math.random()*theDeck.length); 
-		let randomNumber2 = Math.floor(Math.random()*theDeck.length); 
+	// create two random numbers between 0 and 51 and swap the locations of the cards located at those two spots in the deck
+
+	for (let i = 0; i < 989; i++){
+
+
+		var randomNumber1 = Math.floor(Math.random() * theDeck.length); 
+		var randomNumber2 = Math.floor(Math.random() * theDeck.length);
+
+		var firstCardToSwitch = theDeck[randomNumber1];
+		var secondCardToSwitch = theDeck[randomNumber2];
+		var temp  = firstCardToSwitch;//hold the first card because it's about to get overwritten
 
 		
-		
-		
-		var temp = theDeck[randomNumber1];
-		// console.log(randomNumber1, randomNumber2, temp);
+		theDeck[randomNumber2] = firstCardToSwitch;
+		theDeck[randomNumber1] = secondCardToSwitch;
+	}
+}
 
-		theDeck[randomNumber1] = theDeck[randomNumber2];
-		theDeck[randomNumber2] = temp;
-		
-	}	
+//place the card in the dom
 
+function placeCard(who, where, whatCard){
+	//get the class we want to target
+	var classSelector = "." + who + "-cards .card-" + where; 
+	console.log(classSelector);	
+
+	// physically change the html so that it has an image in it
+	$(classSelector).html('<img src="Images/cards/'+ whatCard + '.png">');					
 }
