@@ -10,6 +10,7 @@ var dealersHand = [];
 var topOfDeck = 4;
 
 
+
 // no named function =>
 // load this after the dom is ready
 $(document).ready(function(){
@@ -101,7 +102,8 @@ $(document).ready(function(){
 
 function checkWin(){
 	var playerTotal = calculateTotal(playersHand, "player");
-	var dealerTotal = calculateTotal(dealersHand, "dealer");
+	var dealerTotal = calculateTotal(dealersHand, "dealer") + cardValueOmmitted;
+	console.log("dealer Total is" + dealerTotal);
 
 	// player has more than 21, Player busts and loses
 
@@ -218,29 +220,48 @@ function placeCard(who, where, whatCard){
 	var classSelector = "." + who + "-cards .card-" + where; 
 
 	// physically change the html so that it has an image in it
-	$(classSelector).html('<img src="Images/cards/'+ whatCard + '.png">');					
+
+	//logic for dealer's card here
+
+	// if it is the second dealer card then show the back
+	// placeCard("dealer", 2, dealersHand[1]);
+	if(who === "dealer" && where === 2){
+		$(classSelector).html('<img src="Images/cards/deck.png">');
+
+	}else{
+		$(classSelector).html('<img src="Images/cards/'+ whatCard + '.png">');						
+	}
+	
 }
 
 function calculateTotal(hand, who){
 	var total = 0; 
+	var dealerTotalDisplay = 0;
+
 	var cardValue = 0; //temp var for value of current card 
 	var ace = false;
+
 	for (let i = 0; i < hand.length; i++){
 		//program Ace Logic
 		//if the card is an ace
+		// if this is the second dealer card, don't add it to the total	
+		if(who === "dealer" && i == 1){
+			
+			// console.log("second card");
+			// console.log(hand[i].slice(0,-1));
+			total -= Number(hand[i].slice(0,-1));
+			cardValueOmmitted = Number(hand[i].slice(0,-1));
+		}
 		if(hand[i].slice(0,-1) === "1"){
 			//we have an ace
-			console.log("I'm an ace");
 			if((total + 11) >21){
 				//if the player/dealer busts, the card is 1 otherwise it's 11
 				cardValue = 1;
 			}else{
 				cardValue = 11;
 			}
-			console.log(cardValue);
 		}else{
 			cardValue = Number(hand[i].slice(0,-1));//copy the first character all the way to the end with the exdception of the last character 
-			console.log(hand[i]);
 			if(cardValue > 10){
 				cardValue = 10;
 			}	

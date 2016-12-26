@@ -1,19 +1,24 @@
 body{
-	background-image: url("../Images/black-jack-background2.gif");
+	background-image: url("../Images/red-carpet.jpg");
 }
 
 .the-table{
 	background-color: #277714;
 	border: 5px solid #663300;
-	border-radius: 10px;
+	border-radius: 5% 5% 50% 50%;
 	margin-top: 50px;
 	padding: 30px 0px;
 	width: 90%;
 	margin: auto;
 	margin-top: 40px;
+	overflow: hidden;
+	transform: perspective(100em) rotateX(35deg);
 
 }
 
+.player-hand-wrapper{
+	height: 150px;
+}
 
 .card{
 	height: 120px;
@@ -21,7 +26,7 @@ body{
 	/* background-color: #476622; */
 	color: black;
 	margin: 10px;
-	margin-left: 20px;
+	margin-left: 25px;
 	position: relative;
 	transition: all 1.5s;
 
@@ -44,13 +49,16 @@ img{
 }
 
 .someButtons{
-	padding-top: 70px;
+	padding-top: 10px;
+	height: 80px;
+
 }
 
 #spaceForText{
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: 700;
 	color: gold;
+	height: 40px;
 }
 
 /* for disabled buttons */
@@ -59,4 +67,12 @@ img{
 }
 .disabled:hover{
 	background-color: grey;
+}
+
+
+
+.stool{
+	height: 200px;
+	width: 175px;
+	margin-left: -51px;
 }
